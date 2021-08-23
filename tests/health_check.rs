@@ -1,9 +1,8 @@
-use tokio;
 use std::net::TcpListener;
+use tokio;
 
 #[actix_rt::test]
 async fn health_check_works() {
-
     let address = spawn_app();
     let client = reqwest::Client::new();
 
@@ -17,7 +16,6 @@ async fn health_check_works() {
     assert!(response.status().is_success());
     assert_eq!(Some(0), response.content_length());
 }
-
 
 fn spawn_app() -> String {
     let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind random port");
