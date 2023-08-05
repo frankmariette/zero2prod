@@ -1,9 +1,9 @@
+use once_cell::sync::Lazy;
 use sqlx::{Connection, Executor, PgConnection, PgPool};
 use std::net::TcpListener;
 use uuid::Uuid;
 use zero2prod::configuration::{get_configuration, DatabaseSettings};
 use zero2prod::telemetry::{get_subscriber, init_subscriber};
-use once_cell::sync::Lazy;
 
 static TRACING: Lazy<()> = Lazy::new(|| {
     let default_filter_level = "info".to_string();
@@ -135,7 +135,7 @@ async fn subscribe_returns_400_when_fields_present_but_invalid() {
     let test_cases = vec![
         ("name=&email=ursula_le_guin%40gmail.com", "empty name"),
         ("name=Ursula&email=", "empty email"),
-        ("name=Ursula&email=definitely-not-an-email", "invalid email")
+        ("name=Ursula&email=definitely-not-an-email", "invalid email"),
     ];
 
     for (body, description) in test_cases {
@@ -155,5 +155,3 @@ async fn subscribe_returns_400_when_fields_present_but_invalid() {
         );
     }
 }
-
-
